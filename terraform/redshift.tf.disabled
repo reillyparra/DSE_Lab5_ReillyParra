@@ -1,0 +1,27 @@
+resource "aws_redshiftserverless_namespace" "namespace" {
+  namespace_name = "${var.project_name}-namespace"
+  db_name        = "streamingdb"
+
+  admin_username = "adminuser"
+
+  manage_admin_password = true
+
+  tags = {
+    Project = var.project_name
+  }
+}
+
+resource "aws_redshiftserverless_workgroup" "workgroup" {
+  workgroup_name = "${var.project_name}-workgroup"
+
+  namespace_name = aws_redshiftserverless_namespace.namespace.namespace_name
+
+  base_capacity = 8
+  max_capacity  = 8
+
+  publicly_accessible = true
+
+  tags = {
+    Project = var.project_name
+  }
+}

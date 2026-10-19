@@ -1,0 +1,15 @@
+resource "aws_grafana_workspace" "grafana" {
+  name                     = "${var.project_name}-grafana"
+  account_access_type      = "CURRENT_ACCOUNT"
+  authentication_providers = ["AWS_SSO"]
+  permission_type          = "SERVICE_MANAGED"
+
+  data_sources = [
+    "CLOUDWATCH",
+    "REDSHIFT"
+  ]
+
+  tags = {
+    Project = var.project_name
+  }
+}
